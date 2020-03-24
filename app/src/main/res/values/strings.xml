@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">RPS4</string>
     <string name="action_settings">Settings</string>
+    <string name="youDraw">Draw</string>
+    <string name="youLose">You Lost</string>
+    <string name="youWin">You Win</string>
+    <string name="gameHistory">Game History</string>
 </resources>
