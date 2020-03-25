@@ -16,34 +16,33 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
-const val ROCK = 0
-const val PAPER = 1
-const val SCISSORS = 2
-const val WIN = 2
-const val LOSE = 1
-const val DRAW = 0
+const val Rock = 0
+const val Paper = 1
+const val Scissors = 2
+const val Win = 2
+const val Lose = 1
+const val Draw = 0
 
 class MainActivity : AppCompatActivity() {
     private lateinit var rps4Repository: RPS4Repository
     private lateinit var context: Context
-    var win = 0
-    var draw = 0
-    var lost = 0
+
+// Detemining what combinations are win draw or lose
     val ItemArray: Array<Array<Int>> = arrayOf(
-        arrayOf(//rock [0]
-            DRAW, //rock rock
-            LOSE, //rock paper
-            WIN //rock scissors
+        arrayOf(//rock
+            Draw,
+            Lose,
+            Win
         ),
         arrayOf(//paper
-            WIN, //paper rock
-            DRAW, //paper paper
-            LOSE //paper scissors
+            Win,
+            Draw,
+            Lose
         ),
         arrayOf(//scissors
-            LOSE, //scissors rock
-            WIN, //scissors paper
-            DRAW //scissors scissors
+            Lose,
+            Win,
+            Draw
         )
     )
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +51,13 @@ class MainActivity : AppCompatActivity() {
         rps4Repository = RPS4Repository(this)
         context = this
         ivRock.setOnClickListener {
-            PlayGame(ROCK)
+            PlayGame(Rock)
         }
         ivPaper.setOnClickListener {
-            PlayGame(PAPER)
+            PlayGame(Paper)
         }
         ivScissors.setOnClickListener {
-            PlayGame(SCISSORS)
+            PlayGame(Scissors)
         }
     }
 
@@ -84,10 +83,20 @@ class MainActivity : AppCompatActivity() {
 
     fun PlayGame(selection: Int) {
 
-        var computer = computerDecides()
-        var winner = whoWon(computer, selection)
+        var computer = (0..2).random()
+        var winner = ItemArray[selection][computer]
 
-        addGame(computer, selection, winner)
+        CoroutineScope(Dispatchers.Main).launch {
+            val Games = RPS4(
+                computerPick = computer,
+                userPick = selection,
+                status = winner,
+                date = System.currentTimeMillis()
+            )
+            withContext(Dispatchers.IO) {
+                rps4Repository.insertGames(Games)
+            }
+        }
 
         //update screen
         changeStatus(winner, tvStatus, this)
@@ -95,19 +104,15 @@ class MainActivity : AppCompatActivity() {
         changeImage(computer, ivComputer)
     }
 
-    fun computerDecides(): Int {
-        return (0..2).random()
-    }
-
     companion object {
         fun changeImage(selected: Int, imageView: ImageView) {
-            if (selected == ROCK) {
+            if (selected == Rock) {
                 imageView.setImageResource(R.drawable.rock)
             }
-            if (selected == PAPER) {
+            if (selected == Paper) {
                 imageView.setImageResource(R.drawable.paper)
             }
-            if (selected == SCISSORS) {
+            if (selected == Scissors) {
                 imageView.setImageResource(R.drawable.scissors)
             }
         }
@@ -115,30 +120,11 @@ class MainActivity : AppCompatActivity() {
         fun changeStatus(status: Int, textView: TextView, context: Context) {
             var StatusMessage = ""
             when (status) {
-                DRAW -> StatusMessage = context.getString(R.string.youDraw)
-                LOSE -> StatusMessage = context.getString(R.string.youLose)
-                WIN -> StatusMessage = context.getString(R.string.youWin)
+                Draw -> StatusMessage = context.getString(R.string.youDraw)
+                Lose -> StatusMessage = context.getString(R.string.youLose)
+                Win -> StatusMessage = context.getString(R.string.youWin)
             }
             textView.text = StatusMessage
-        }
-    }
-
-    fun whoWon(computer: Int, user: Int): Int {
-        return ItemArray[user][computer]
-    }
-
-    private fun addGame(computer: Int, user: Int, status: Int) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val Games = RPS4(
-                computerPick = computer,
-                userPick = user,
-                status = status,
-                date = System.currentTimeMillis()
-            )
-
-            withContext(Dispatchers.IO) {
-                rps4Repository.insertGames(Games)
-            }
         }
     }
 }

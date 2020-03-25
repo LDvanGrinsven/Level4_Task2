@@ -14,7 +14,6 @@ class ProductAdapter(private val Games: List<RPS4>) :
         holder.bind(Games[position])
     }
 
-
     /**
      * Creates and returns a ViewHolder object, inflating a standard layout called simple_list_item_1.
      */
@@ -29,7 +28,6 @@ class ProductAdapter(private val Games: List<RPS4>) :
      */
     override fun getItemCount(): Int {
         return Games.size
-
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
