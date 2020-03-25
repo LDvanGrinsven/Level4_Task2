@@ -1,11 +1,11 @@
-package com.example.rps4
+package com.example.rps4.database
 
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.rps4.RPS4
+import com.example.rps4.model.RPS4
 
 @Database(entities = [RPS4::class], version = 1, exportSchema = false)
 abstract class GameRoomDatabase : RoomDatabase() {

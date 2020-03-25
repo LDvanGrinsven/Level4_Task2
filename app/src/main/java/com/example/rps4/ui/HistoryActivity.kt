@@ -1,4 +1,4 @@
-package com.example.rps4
+package com.example.rps4.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.view.MenuItem
-
+import com.example.rps4.R
+import com.example.rps4.database.RPS4Repository
+import com.example.rps4.model.RPS4
 
 class HistoryActivity : AppCompatActivity() {
     private val games = arrayListOf<RPS4>()

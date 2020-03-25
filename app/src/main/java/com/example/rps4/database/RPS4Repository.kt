@@ -1,7 +1,7 @@
-package com.example.rps4
+package com.example.rps4.database
 
 import android.content.Context
-
+import com.example.rps4.model.RPS4
 
 class RPS4Repository(context: Context) {
 

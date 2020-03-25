@@ -1,4 +1,4 @@
-package com.example.rps4
+package com.example.rps4.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.history_item.view.*
 import java.util.*
+import com.example.rps4.R
+import com.example.rps4.database.RPS4Repository
+import com.example.rps4.model.RPS4
 
 class ProductAdapter(private val Games: List<RPS4>) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {

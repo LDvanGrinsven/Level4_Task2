@@ -1,8 +1,8 @@
-package com.example.rps4
+package com.example.rps4.database
 
 
 import androidx.room.*
-
+import com.example.rps4.model.RPS4
 
 @Dao
 interface RPS4Dao {

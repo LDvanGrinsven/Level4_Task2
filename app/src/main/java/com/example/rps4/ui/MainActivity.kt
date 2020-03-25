@@ -1,4 +1,4 @@
-package com.example.rps4
+package com.example.rps4.ui
 
 import android.content.Context
 import android.content.Intent
@@ -15,6 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
+import com.example.rps4.R
+import com.example.rps4.database.RPS4Repository
+import com.example.rps4.model.RPS4
 
 const val Rock = 0
 const val Paper = 1

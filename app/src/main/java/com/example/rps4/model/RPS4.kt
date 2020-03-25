@@ -1,4 +1,4 @@
-package com.example.rps4
+package com.example.rps4.model
 
 import androidx.room.*
 
